@@ -44,8 +44,7 @@ def csvToXml(scsv, fxml):
 
 def handle(sid):
     print 'Download...(%d)' % sid
-#    url = 'http://table.finance.yahoo.com/table.csv?s=%s.sz'
-    url = 'http://www.baidu.com'
+    url = 'http://hq.sinajs.cn/list=sh%s'
     url %= str(sid).rjust(6, '0')
     rf = download(url)
     if rf is None:
@@ -58,10 +57,28 @@ def handle(sid):
 
 # 多线程，方式1
 from threading import Thread
+#
+# t = Thread(target=handle, args=(1,))
+# t.start()
+#
+# print 'main thread'
 
-t = Thread(target=handle, args=(1,))
-t.start()
+# 多线程，方式2
+class MyThread(Thread):
+    def __init__(self, sid):
+        Thread.__init__(self)
+        self.sid = sid
+
+    def run(self):
+        handle(self.sid)
+
+threads = []
+for i in xrange(1, 11):
+    t = MyThread(i)
+    threads.append(t)
+    t.start()
+
+for t in threads:
+    t.join()
 
 print 'main thread'
-
-

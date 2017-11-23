@@ -9,13 +9,13 @@
 
 from urllib import urlretrieve
 
-urlretrieve('http://table.finance.yahoo.com/table.csv?s=000001.sz', 'pingan.csv')
+urlretrieve('http://hq.sinajs.cn/list=sh601006', 'gosuncn.csv')
 
 import csv
 
-with open('pingan.csv', 'rb') as rf:
+with open('gosuncn.csv', 'rb') as rf:
     reader = csv.reader(rf)
-    with open('pingan2.csv', 'wb') as wf:
+    with open('gosuncn2.csv', 'wb') as wf:
         writer = csv.writer(wf)
         headers = reader.next()
         writer.writerow(headers)
